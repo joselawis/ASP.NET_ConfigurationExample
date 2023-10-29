@@ -14,8 +14,12 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        ViewBag.MyKey = _configuration["MyKey"];
-        ViewBag.MyAPIKey = _configuration.GetValue("MyAPIKey", "The default key");
+        //  ViewBag.ClientID = _configuration["weatherapi:ClientID"];
+        //  ViewBag.ClientSecret = _configuration.GetValue("weatherapi:ClientSecret", "The default client secret");
+
+        var weatherapiSection = _configuration.GetSection("weatherapi");
+        ViewBag.ClientID = weatherapiSection["ClientID"];
+        ViewBag.ClientSecret = weatherapiSection["ClientSecret"];
         return View();
     }
 }
