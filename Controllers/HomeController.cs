@@ -14,12 +14,15 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        //  ViewBag.ClientID = _configuration["weatherapi:ClientID"];
-        //  ViewBag.ClientSecret = _configuration.GetValue("weatherapi:ClientSecret", "The default client secret");
+        // Get: Loads configuration values into a new object
+        //  var options = _configuration.GetSection("weatherApi").Get<WeatherApiOptions>();
 
-        var weatherapiSection = _configuration.GetSection("weatherapi");
-        ViewBag.ClientID = weatherapiSection["ClientID"];
-        ViewBag.ClientSecret = weatherapiSection["ClientSecret"];
+        // Bind: Loads configuration values into existing object
+        var options = new WeatherApiOptions();
+        _configuration.GetSection("weatherApi").Bind(options);
+
+        ViewBag.ClientID = options.ClientId;
+        ViewBag.ClientSecret = options.ClientSecret;
         return View();
     }
 }
